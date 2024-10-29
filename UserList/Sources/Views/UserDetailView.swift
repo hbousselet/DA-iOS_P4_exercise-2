@@ -5,9 +5,8 @@ struct UserDetailView: View {
     
     var body: some View {
         VStack {
-            HStack{}
-            .imager(userImage: user.picture.large, width: 200, height: 200)
-            .userInfo(firstname: user.name.first, lastname: user.name.last, date: user.dob.date)
+            ImageView(userImage: user.picture.large, width: 200, height: 200)
+            UserInfo(firstname: user.name.first, lastname: user.name.last, date: user.dob.date)
             .padding()
             Spacer()
         }

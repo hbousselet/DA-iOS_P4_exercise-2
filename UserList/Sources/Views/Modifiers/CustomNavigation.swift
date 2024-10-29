@@ -8,14 +8,15 @@
 import SwiftUI
 
 struct CustomNavigation: ViewModifier {
-    @ObservedObject var model: UserViewModel
+    @Binding var isGridView: Bool
+    @State var onTap: () -> Void
     
     func body(content: Content) -> some View {
         content
         .navigationTitle("Users")
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                Picker(selection: $model.isGridView, label: Text("Display")) {
+                Picker(selection: $isGridView, label: Text("Display")) {
                     Image(systemName: "rectangle.grid.1x2.fill")
                         .tag(true)
                         .accessibilityLabel(Text("Grid view"))
@@ -26,11 +27,7 @@ struct CustomNavigation: ViewModifier {
                 .pickerStyle(SegmentedPickerStyle())
             }
             ToolbarItem(placement: .navigationBarTrailing) {
-                Button(action: {
-                    Task {
-                        await model.reloadUsers()
-                    }
-                }) {
+                Button(action: onTap) {
                     Image(systemName: "arrow.clockwise")
                         .imageScale(.large)
                 }
@@ -40,7 +37,7 @@ struct CustomNavigation: ViewModifier {
 }
 
 extension View {
-    func applyNavigation(model: UserViewModel) -> some View {
-        modifier(CustomNavigation(model: model))
+    func applyNavigation(isGridView: Binding<Bool>, onTap: @escaping () -> Void) -> some View {
+        modifier(CustomNavigation(isGridView: isGridView, onTap: onTap))
     }
 }

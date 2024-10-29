@@ -24,10 +24,8 @@ final class UserViewModel: ObservableObject {
     @MainActor
     func fetchUsers() async {
         isLoading = true
-        // should return to main thread for published properties
         do {
             let fetchedUsers = try await repository.fetchUsers(quantity: 20)
-            // should return to main thread for published property
             self.users.append(contentsOf: fetchedUsers)
             self.isLoading = false
         } catch {
@@ -44,8 +42,8 @@ final class UserViewModel: ObservableObject {
     // TODO: - Should be a viewModel's input
     @MainActor
     func reloadUsers() async {
+        print(isGridView)
         users.removeAll()
         await fetchUsers()
-        print(self.users)
     }
 }

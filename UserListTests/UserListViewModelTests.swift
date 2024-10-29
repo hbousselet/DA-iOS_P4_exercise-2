@@ -36,6 +36,7 @@ final class UserListViewModelTests: XCTestCase {
     }
     
     func testReloadUsers() async {
+        //appeler deux fois fetch puis reload
         await viewModel.reloadUsers()
         XCTAssertEqual(viewModel.users.count, 2)
     }
