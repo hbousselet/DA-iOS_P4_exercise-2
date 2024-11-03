@@ -42,7 +42,6 @@ final class UserViewModel: ObservableObject {
     // TODO: - Should be a viewModel's input
     @MainActor
     func reloadUsers() async {
-        print(isGridView)
         users.removeAll()
         await fetchUsers()
     }
